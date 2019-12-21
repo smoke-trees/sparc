@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package main;
+
+enum AuthLevel {
+    level0 = 0;
+    level2 = 1;
+    level3 = 2;
+    level4 = 3;
+}
+
+message UserDetails {
+    string username = 1;
+
+    // Name of the user
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+
+    AuthLevel levelOfAuth = 5;
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    int32 status = 1;
+    string message = 2;
+    string token = 3;
+}
+
+message NewUserRequest {
+    UserDetails user = 1;
+    string password = 2;
+    AuthLevel levelOfAuth = 6;
+}
+
+message NewUserResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+message VerifyRequest {
+    string username = 1;
+    string token = 2;
+    string authLevelRequested = 3;
+}
+
+message VerifyResponse {
+    int32 status = 1;
+    string message = 2;
+    bool granted = 3;
+}
+
+service AuthenticationService {
+    rpc NewUser (NewUserRequest) returns (NewUserResponse);
+    rpc LoginUser (LoginRequest) returns (LoginResponse);
+    rpc VerifyUser (VerifyRequest) returns (VerifyResponse);
+}
