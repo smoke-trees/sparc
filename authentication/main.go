@@ -46,6 +46,8 @@ func main() {
 	}
 	log.SetOutput(mw)
 
+	// Setup the database
+
 	// Setting up the server
 	log.Infoln("Starting Authentication Server")
 	l, err := net.Listen("tcp", "0.0.0.0:8080")
