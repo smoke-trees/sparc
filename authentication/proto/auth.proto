@@ -34,7 +34,6 @@ message LoginResponse {
 message NewUserRequest {
     UserDetails user = 1;
     string password = 2;
-    AuthLevel levelOfAuth = 6;
 }
 
 message NewUserResponse {
@@ -45,7 +44,7 @@ message NewUserResponse {
 message VerifyRequest {
     string username = 1;
     string token = 2;
-    string authLevelRequested = 3;
+    AuthLevel authLevelRequested = 3;
 }
 
 message VerifyResponse {

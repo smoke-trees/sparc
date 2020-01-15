@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"io"
@@ -47,6 +48,11 @@ func main() {
 	log.SetOutput(mw)
 
 	// Setup the database
+	dbClient, dbErr := getDatabaseConnection("mongodb://localhost:27017")
+	if dbErr != nil {
+		os.Exit(1)
+	}
+	s.dbClient = dbClient
 
 	// Setting up the server
 	log.Infoln("Starting Authentication Server")
@@ -75,4 +81,5 @@ func main() {
 
 	// Shutdown Routine
 	s.CloseFile()
+	_ = s.dbClient.Disconnect(context.Background())
 }
