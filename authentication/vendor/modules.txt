@@ -2,7 +2,7 @@
 github.com/DataDog/zstd
 # github.com/go-stack/stack v1.8.0
 github.com/go-stack/stack
-# github.com/golang/protobuf v1.3.2
+# github.com/golang/protobuf v1.3.3
 github.com/golang/protobuf/proto
 github.com/golang/protobuf/ptypes
 github.com/golang/protobuf/ptypes/any
@@ -74,7 +74,7 @@ golang.org/x/text/secure/bidirule
 golang.org/x/text/unicode/bidi
 # google.golang.org/genproto v0.0.0-20190819201941-24fa4b261c55
 google.golang.org/genproto/googleapis/rpc/status
-# google.golang.org/grpc v1.26.0
+# google.golang.org/grpc v1.27.0
 google.golang.org/grpc
 google.golang.org/grpc/codes
 google.golang.org/grpc/status
