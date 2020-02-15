@@ -225,3 +225,6 @@ fabric.properties
 # Binaries from the applications go here
 authentication
 logging
+
+# Datasets
+*.csv
