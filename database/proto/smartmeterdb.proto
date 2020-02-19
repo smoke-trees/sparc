@@ -1,0 +1,69 @@
+syntax="proto3";
+
+package database;
+
+option go_package="proto";
+
+import "google/protobuf/timestamp.proto";
+
+message SMData {
+    string Id=1;
+    string meterId=2;
+    string customerId=3;
+    Timestamp lastUpdated=4;
+    float energyConsumed=5; 
+}
+
+message DataLogRequest{
+    SMData data= 1;
+}
+
+message DataLogResponse{
+    SMdata data =1; //returns with logID
+}
+
+message ReadDataRequest{
+    string log_id=1; //search with logId
+}
+
+message ReadDataResponse{
+    SMData data = 1; // returns with the data requested
+}
+
+message UpdateDataRequest{
+    SMdata data = 1; // data to be updated
+}
+
+message UpdateDataResponse{
+    SMdata data =1; //returns with the updated data in db
+}
+
+message DeleteDataRequest{
+    string log_id = 1; // give the log_id of the data to be removed
+}
+
+message DeleteDataResponse{
+    string log_id=1; // returns with log_id of the data removed earlier
+}
+
+message DisplayAllDataRequest{
+    //in case we want to display all the logged data
+}
+
+message DisplayAllDataResponse{
+    SMData data=1; // we're gonna stream the data to the client 
+}
+
+
+service SMDataService{
+    rpc DataLog (DataLogRequest) returns (DataLogResponse);
+    rpc ReadData (ReadDataRequest) returns (ReadDataResponse);
+    rpc UpdateData (UpdateDataRequest) returns (UpdateDataResponse);
+    rpc DeleteData (DeleteDataRequest) returns (DeleteDataResponse);
+    rpc DisplayAllData (DisplayAllDataRequest) returns (stream DisplayAllDataResponse);
+}
+
+
+
+
+
