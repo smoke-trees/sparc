@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package logging;
+
+option go_package = "main";
+
+import "smartmeterdb.proto";
+
+service LoggingService {
+    rpc DataLog (database.DataLogRequest) returns (database.DataLogResponse);
+}
