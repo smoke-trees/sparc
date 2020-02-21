@@ -41,7 +41,7 @@ message UpdateDataRequest{
 
 message UpdateDataResponse{
     int32 status = 1;
-    string resonse = 2;
+    string response = 2;
 }
 
 message DeleteDataRequest{
