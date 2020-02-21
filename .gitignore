@@ -225,6 +225,8 @@ fabric.properties
 # Binaries from the applications go here
 authentication
 logging
+database
+sparc
 
 # Datasets
 *.csv

@@ -1,4 +1,4 @@
-module github.com/spark/logging
+module github.com/smoke-trees/spark/logging
 
 go 1.13
 

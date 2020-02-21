@@ -31,7 +31,7 @@ type DataFormat struct {
 	EnergyConsumed float32              `bson:"energy_consumed"`
 }
 
-func (*Server) DataLog(ctx context.Context,req *proto.DataLogRequest) (*proto.DataLogResponse, error) {
+func (*Server) DataLog(ctx context.Context, req *proto.DataLogRequest) (*proto.DataLogResponse, error) {
 	fmt.Println("Data is being logged..")
 	data := req.GetData()
 
@@ -65,7 +65,7 @@ func (*Server) DataLog(ctx context.Context,req *proto.DataLogRequest) (*proto.Da
 	}, nil
 }
 
-func (*Server) ReadData(ctx context.Context,req *proto.ReadDataRequest) (*proto.ReadDataResponse, error) {
+func (*Server) ReadData(ctx context.Context, req *proto.ReadDataRequest) (*proto.ReadDataResponse, error) {
 	fmt.Println("Reading the data..")
 	logid := req.GetLogId()
 	oid, err := primitive.ObjectIDFromHex(logid)
@@ -95,7 +95,7 @@ func (*Server) ReadData(ctx context.Context,req *proto.ReadDataRequest) (*proto.
 	}, nil
 }
 
-func (*Server) UpdateData(ctx context.Context,req *proto.UpdateDataRequest) (*proto.UpdateDataResponse, error) {
+func (*Server) UpdateData(ctx context.Context, req *proto.UpdateDataRequest) (*proto.UpdateDataResponse, error) {
 	fmt.Println("Updating data..")
 	data := req.GetData()
 	oid, err := primitive.ObjectIDFromHex(data.GetId())
@@ -129,7 +129,7 @@ func (*Server) UpdateData(ctx context.Context,req *proto.UpdateDataRequest) (*pr
 
 	return &proto.UpdateDataResponse{
 		Status:               1,
-		Resonse:              "Data updated successfully",
+		Response:             "Data updated successfully",
 		XXX_NoUnkeyedLiteral: struct{}{},
 		XXX_unrecognized:     nil,
 		XXX_sizecache:        0,
@@ -137,7 +137,7 @@ func (*Server) UpdateData(ctx context.Context,req *proto.UpdateDataRequest) (*pr
 
 }
 
-func (*Server) DeleteData(ctx context.Context,req *proto.DeleteDataRequest) (*proto.DeleteDataResponse, error) {
+func (*Server) DeleteData(ctx context.Context, req *proto.DeleteDataRequest) (*proto.DeleteDataResponse, error) {
 	fmt.Println("Deleting..")
 	logid := req.GetLogId()
 	oid, err := primitive.ObjectIDFromHex(logid)
@@ -205,6 +205,7 @@ func (*Server) DisplayAllData(req *proto.DisplayAllDataRequest, stream proto.SMD
 
 		return nil
 	}
+	return nil
 }
 
 func main() {
@@ -218,20 +219,20 @@ func main() {
 		log.Fatal(err)
 	}
 	err = client.Connect(context.TODO())
-	if err!=nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("Database service started")
-	collection=client.Database("SMDatabase").Collection("Customer meter data")
+	collection = client.Database("SMDatabase").Collection("Customer meter data")
 
-	lis,error:=net.Listen("tcp","0.0.0.0:50051")
-	if error!=nil{
-		log.Fatalf("Failed to listen : %V",error)
+	lis, error := net.Listen("tcp", "0.0.0.0:50051")
+	if error != nil {
+		log.Fatalf("Failed to listen : %V", error)
 	}
-	opts :=[]grpc.ServerOption{}
-	s:=grpc.NewServer(opts...)
-	proto.RegisterSMDataServiceServer(s,&Server{})
+	opts := []grpc.ServerOption{}
+	s := grpc.NewServer(opts...)
+	proto.RegisterSMDataServiceServer(s, &Server{})
 	reflection.Register(s)
 
 	go func() {
@@ -242,7 +243,7 @@ func main() {
 	}()
 
 	//wait for Control C to exit
-	ch:=make(chan os.Signal, 1)
+	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, os.Interrupt)
 
 	//block until the signal is received
@@ -256,6 +257,4 @@ func main() {
 	fmt.Println("Closing the MongoDB connection")
 	client.Disconnect(context.TODO())
 	fmt.Println("Exiting")
-
-
 }
