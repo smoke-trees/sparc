@@ -17,11 +17,10 @@ data = pd.read_csv('features.csv')
 input_data = data.drop(['Date','Time','Cos Phi AN Avg','Cos Phi BN Avg','Cos Phi CN Avg','Cos Phi Total Avg'], axis = 1)
 # Dropping cos phi values as they have little to no affect on modelling
 
-"""
+
 scaler = StandardScaler()
 scaler.fit(input_data[:3*len(input_data)//4]) # 0.75 because train_size is 75% of given data
 copy = scaler.transform(input_data)
-"""
 
 timestep = 10
 
@@ -64,8 +63,6 @@ pickle_out = open("dict.pickle","wb")
 pickle.dump(data_dump, pickle_out)
 pickle_out.close()
 
-"""
 pickle_out = open("scaler.pickle","wb")
 pickle.dump(scaler, pickle_out)
 pickle_out.close()
-"""
