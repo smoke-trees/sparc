@@ -40,9 +40,15 @@ func main() {
 	}
 	log.SetOutput(mw)
 
-
 	// Setting up the server
 	log.Infoln("Starting Logging Server")
+
+	dbc, dbcErr := grpc.Dial("0.0.0.0:8081", grpc.WithInsecure())
+	if dbcErr != nil {
+		log.Fatalf("Error in Connecting to Database Service")
+	}
+	s.databaseClient = NewSMDataServiceClient(dbc)
+
 	l, err := net.Listen("tcp", "0.0.0.0:8080")
 
 	if err != nil {
@@ -50,6 +56,7 @@ func main() {
 	}
 
 	gs := grpc.NewServer()
+	RegisterLoggingServiceServer(gs, &s)
 
 	// Start the server
 	go func() {
