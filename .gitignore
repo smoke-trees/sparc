@@ -223,9 +223,9 @@ fabric.properties
 
 
 # Binaries from the applications go here
-authentication
-logging
-database
+authentication/authentication
+logging/logging
+database/database
 sparc
 
 # Datasets

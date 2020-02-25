@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"io"
@@ -13,6 +14,14 @@ import (
 var s Server
 
 func main() {
+
+	// Read environment variables
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	fmt.Print(port)
+
 	lf, fileError := os.OpenFile("auth.log", os.O_RDWR, os.ModePerm)
 	if fileError != nil {
 		log.Warn("Error in opening logging file: auth.log")
@@ -49,7 +58,7 @@ func main() {
 	}
 	s.databaseClient = NewSMDataServiceClient(dbc)
 
-	l, err := net.Listen("tcp", "0.0.0.0:8080")
+	l, err := net.Listen("tcp", "0.0.0.0:"+port)
 
 	if err != nil {
 		log.Fatalln("error in listening to the port 8080")
