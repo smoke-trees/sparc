@@ -15,6 +15,12 @@ var s Server
 
 func main() {
 
+	// Read environment variables
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
 	// Setup logging File for the Server
 	lf, fileError := os.OpenFile("auth.log", os.O_RDWR, os.ModePerm)
 	if fileError != nil {
@@ -56,7 +62,7 @@ func main() {
 
 	// Setting up the server
 	log.Infoln("Starting Authentication Server")
-	l, err := net.Listen("tcp", "0.0.0.0:8080")
+	l, err := net.Listen("tcp", "0.0.0.0:"+port)
 
 	if err != nil {
 		log.Fatalln("error in listening to the port 8080")
