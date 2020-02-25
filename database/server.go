@@ -35,14 +35,14 @@ func (*Server) DataLog(ctx context.Context, req *proto.DataLogRequest) (*proto.D
 	fmt.Println("Data is being logged..")
 	data := req.GetData()
 
-	log := DataFormat{
+	dataLog := DataFormat{
 		MeterId:        data.GetMeterId(),
 		CustomerId:     data.GetCustomerId(),
 		LastUpdated:    data.GetLastUpdated(),
 		EnergyConsumed: data.GetEnergyConsumed(),
 	}
 
-	res, err := collection.InsertOne(context.Background(), log)
+	res, err := collection.InsertOne(context.Background(), dataLog)
 	if err != nil {
 		return nil, status.Errorf(
 			codes.Internal,
@@ -209,6 +209,13 @@ func (*Server) DisplayAllData(req *proto.DisplayAllDataRequest, stream proto.SMD
 }
 
 func main() {
+
+	// Read port from the environment variable
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
 	//if we crash the code, we can point out the source of the error
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	fmt.Println("Connecting to mongoDB")
@@ -226,7 +233,7 @@ func main() {
 	fmt.Println("Database service started")
 	collection = client.Database("SMDatabase").Collection("Customer meter data")
 
-	lis, error := net.Listen("tcp", "0.0.0.0:50051")
+	lis, error := net.Listen("tcp", "0.0.0.0:"+port)
 	if error != nil {
 		log.Fatalf("Failed to listen : %V", error)
 	}
