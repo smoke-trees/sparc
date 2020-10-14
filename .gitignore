@@ -21,6 +21,7 @@ vendor/
 __pycache__/
 *.py[cod]
 *$py.class
+*.ipynb_checkpoints/
 
 # C extensions
 *.so
@@ -63,7 +64,6 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
-nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
@@ -230,4 +230,6 @@ sparc
 
 # Datasets
 *.csv
+*.png
+*xlsx
 *.pickle
