@@ -12,6 +12,13 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
 
 
+physical_devices = tf.config.list_physical_devices('GPU')
+try:
+  tf.config.experimental.set_memory_growth(physical_devices[0], True)
+except:
+  print("Invalid device or cannot modify virtual devices once initialized.")
+  pass
+
 X_train, y_train = pickle.load(open( "dict.pickle", "rb" ))
 
 model = tf.keras.models.load_model("recurrent_model_initial.h5")

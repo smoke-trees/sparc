@@ -12,7 +12,7 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 
 
-data = pd.read_csv('features.csv')
+data = pd.read_excel('features.xlsx')
 
 input_data = data.drop(['Date','Time','Cos Phi AN Avg','Cos Phi BN Avg','Cos Phi CN Avg','Cos Phi Total Avg'], axis = 1)
 # Dropping cos phi values as they have little to no affect on modelling
